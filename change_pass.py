@@ -85,7 +85,7 @@ def interactive_mode_gatherer_information() -> tuple:
     return ssh_username, old_ssh_pass, new_pass 
 
 
-def interactive_mode_get_machines(input_list_mode:bool, machines) ->"list(str)":
+def interactive_mode_get_machines(input_list_mode:bool, machines) -> list[str]:
     
     if(input_list_mode):
         return machines.split(MACHINE_SEPARATOR)
@@ -126,16 +126,16 @@ def change_expired_password_over_ssh(host:str, username:str, current_password:st
         ssh_connection.connect(hostname=host, username=username, password=current_password)
         ssh_channel = ssh_connection.invoke_shell()
 
-        wait_until_one_of_patterns_matche(ssh_channel, patterns["attempt_pattern_prompt1"])       
+        wait_until_one_of_patterns_matche(ssh_channel, patterns["patterns"]["attempt_pattern_prompt1"])       
         ssh_channel.send(f'{current_password}\n')
 
-        wait_until_one_of_patterns_matche(ssh_channel, patterns["attempt_pattern_prompt2"])
+        wait_until_one_of_patterns_matche(ssh_channel, patterns["patterns"]["attempt_pattern_prompt2"])
         ssh_channel.send(f'{new_password}\n')
 
-        wait_until_one_of_patterns_matche(ssh_channel, patterns["attempt_pattern_prompt3"])
+        wait_until_one_of_patterns_matche(ssh_channel, patterns["patterns"]["attempt_pattern_prompt3"])
         ssh_channel.send(f'{new_password}\n')
 
-        wait_until_one_of_patterns_matche(ssh_channel, patterns["attempt_pattern_prompt4"])
+        wait_until_one_of_patterns_matche(ssh_channel, patterns["patterns"]["attempt_pattern_prompt4"])
 
 
 
